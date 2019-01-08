@@ -1,0 +1,52 @@
+1.安装GPIO库：
+sudo apt-get install python-rpi.gpio
+
+2.安装wiringpi
+pip3 install wiringpi
+
+3.安装serial库(连接蓝牙获取数据)
+
+4.树莓派蓝牙和单片机蓝牙传输数据
+	获取蓝牙模块的mac地址 hcitool scan
+	链接蓝牙模块 sudo rfcomm connect 0 AB:D1:20:57:34:02 1&
+	（其中AB:D1:20:57:34:02为单片机蓝牙模块mac地址，&表示后台运行）
+	查看蓝牙端口 ls /dev -l
+
+5.树莓派蓝牙开机自动连接
+在树莓派/etc/init.d 新建文件connectBluetooth.sh输入：
+	 #!/bin/sh
+	sleep 3 #等待系统加载好相关库
+	sudo rfcomm connect 0 AB:D1:20:57:34:02 1&
+
+	改用root 帐号登录,为connectBluetooth.sh文件授权
+	sudo chmod 777 connectBluetooth.sh
+	设置connectBluetooth.sh自动启动
+	sudo update-rc.d connectBluetooth.sh defaults
+	
+	问题：！！如此还有一个小问题,当HC06模块比树莓派开机早了,就无法连接上,我用了比较粗暴的方法,使用代码直接让树莓派重启.-->system("sudo reboot");
+
+6.django服务器（MVT框架）
+	高扩展性
+	向后兼容
+	低耦合，高内聚
+
+	项目入口： manage.py
+	项目的配置： 项目名
+	项目的开发： 自定义应用
+
+	虚拟环境：workon,mkvirtualenv,rmvirtualenv,deactivate
+		pip list,pip install
+
+	django的命令：django-admin startproject(创建项目)
+		python manage.py startapp (创建应用)
+		python manage.py makemigrations(生成迁移文件)
+		python manage.py migrate(执行迁移)
+		python manage.py runserver
+		python manage.py createsuperuser(创建管理员用户)
+
+	admin的使用admin.py
+		admin.site.register(模型类，admin类)
+
+
+	
+
